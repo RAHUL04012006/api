@@ -1,35 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Fetch API Key from Google Apps Script</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Google Script API Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    pre {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 15px;
+      width: 90%;
+      max-width: 600px;
+      overflow-x: auto;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-  <h2>Fetch API Key from Google Apps Script</h2>
-  <button onclick="getApiKey()">Get API Key</button>
-  <p id="result"></p>
+  <h2>Test Google Apps Script API</h2>
+  <button onclick="getApi()">Send GET Request</button>
+  <button onclick="sendPost()">Send POST Request</button>
+
+  <pre id="output">Waiting for response...</pre>
 
   <script>
-    async function getApiKey() {
-      // ✅ Replace this URL with your actual web app URL
-      const url = "https://script.google.com/macros/s/AKfycbziBB4zMMDs8tMahCm7o_QfOn7jdSlDy204o3VZBm9eRcSMlWpowKv7FAY0xK-tXutn7Q/exec";
-      
+    const scriptURL = "https://script.google.com/macros/s/AKfycbziBB4zMMDs8tMahCm7o_QfOn7jdSlDy204o3VZBm9eRcSMlWpowKv7FAY0xK-tXutn7Q/exec"; // 👈 Replace this
+
+    async function getApi() {
       try {
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json"
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        document.getElementById("result").innerText = "API Key: " + data.key;
+        const res = await fetch(scriptURL);
+        const data = await res.json();
+        document.getElementById("output").textContent = JSON.stringify(data, null, 2);
       } catch (err) {
-        console.error("Fetch error:", err);
-        document.getElementById("result").innerText = "Error fetching API key";
+        document.getElementById("output").textContent = "Error: " + err;
+      }
+    }
+
+    async function sendPost() {
+      try {
+        const res = await fetch(scriptURL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: "Rahul", project: "Testing CORS Fix" }),
+        });
+        const data = await res.json();
+        document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        document.getElementById("output").textContent = "Error: " + err;
       }
     }
   </script>
