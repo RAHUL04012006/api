@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,22 +9,17 @@
   <p id="result"></p>
 
   <script>
-    <script>
-async function getApiKey() {
-  const url = "https://script.google.com/macros/s/AKfycbziBB4zMMDs8tMahCm7o_QfOn7jdSlDy204o3VZBm9eRcSMlWpowKv7FAY0xK-tXutn7Q/exec"; // use your full URL
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    document.getElementById("result").innerText = "API Key: " + data.key;
-  } catch (err) {
-    console.error(err);
-    document.getElementById("result").innerText = "Error fetching API key";
-  }
-}
-</script>
-
+    async function getApiKey() {
+      const url = "https://script.google.com/macros/s/AKfycbziBB4zMMDs8tMahCm7o_QfOn7jdSlDy204o3VZBm9eRcSMlWpowKv7FAY0xK-tXutn7Q/exec";
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        document.getElementById("result").innerText = "API Key: " + data.key;
+      } catch (err) {
+        console.error(err);
+        document.getElementById("result").innerText = "Error fetching API key";
+      }
+    }
   </script>
 </body>
 </html>
-
-
