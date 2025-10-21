@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API Key Fetch</title>
+</head>
+<body>
+  <h2>Fetch API Key from Google Apps Script</h2>
+  <button onclick="getApiKey()">Get API Key</button>
+  <p id="result"></p>
+
+  <script>
+    async function getApiKey() {
+      const url = "https://script.google.com/macros/s/AKfycbxxxxxxx/exec"; // Replace with your own
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        document.getElementById("result").innerText = "API Key: " + data.key;
+      } catch (err) {
+        console.error(err);
+        document.getElementById("result").innerText = "Error fetching API key";
+      }
+    }
+  </script>
+</body>
+</html>
