@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>API Key Fetch</title>
+  <title>Fetch API Key from Google Apps Script</title>
 </head>
 <body>
   <h2>Fetch API Key from Google Apps Script</h2>
@@ -10,16 +10,29 @@
 
   <script>
     async function getApiKey() {
+      // ✅ Replace this URL with your actual web app URL
       const url = "https://script.google.com/macros/s/AKfycbziBB4zMMDs8tMahCm7o_QfOn7jdSlDy204o3VZBm9eRcSMlWpowKv7FAY0xK-tXutn7Q/exec";
+      
       try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
         const data = await response.json();
         document.getElementById("result").innerText = "API Key: " + data.key;
       } catch (err) {
-        console.error(err);
+        console.error("Fetch error:", err);
         document.getElementById("result").innerText = "Error fetching API key";
       }
     }
   </script>
 </body>
 </html>
+
